@@ -1,12 +1,6 @@
 ﻿using MedMeter.Models;
 using System;
-using System.Collections.Generic;
-using System.Reactive.Concurrency;
-using System.Reactive.Joins;
 using System.Reactive.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
 
 namespace MedMeter.ViewModels
 {
@@ -65,10 +59,7 @@ namespace MedMeter.ViewModels
             set => SetProperty(ref progress, value);
         }
 
-        private static bool ShouldRefresh = true;
-        private IObservable<long> Refresher { get; set; } = Observable
-                                                                .Interval(TimeSpan.FromSeconds(1))
-                                                                .Where(_ => ShouldRefresh == true);
+        private IObservable<long> Refresher { get; set; } = Observable.Interval(TimeSpan.FromSeconds(1));
 
         public MedicineViewModel(Medicine medicine)
         {

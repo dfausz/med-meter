@@ -1,13 +1,7 @@
-﻿using MedMeter.Models;
-using MedMeter.ViewModels;
+﻿using MedMeter.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace MedMeter
@@ -38,17 +32,7 @@ namespace MedMeter
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            ViewModel.TakeMedicine((sender as Button).CommandParameter as MedicineViewModel);
-        }
-
-        private void RefreshView_Refreshing(object sender, EventArgs e)
-        {
-        }
-
-        private void Button_Clicked_1(object sender, EventArgs e)
-        {
-            
-
+            ViewModel.TakeMedicine((e as TappedEventArgs).Parameter as MedicineViewModel);
         }
     }
 }

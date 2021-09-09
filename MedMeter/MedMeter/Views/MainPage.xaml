@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:MedMeter.ViewModels"
              xmlns:controls="clr-namespace:MedMeter.Controls"
-             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms" 
+             xmlns:views="clr-namespace:MedMeter.Views"
              x:Class="MedMeter.MainPage">
 
     <StackLayout Padding="0">
@@ -18,9 +19,16 @@
                                     <Label Text="{Binding LastTaken}"></Label>
                                 </StackLayout>
                                 <Grid>
-                                    <Button Text="Take" Clicked="Button_Clicked" CommandParameter="{Binding .}" BackgroundColor="LightSteelBlue" TextColor="navy" CornerRadius="100" WidthRequest="95" HeightRequest="95" VerticalOptions="Center" HorizontalOptions="Center">
-                                        
-                                    </Button>
+                                    <Frame CornerRadius="45" WidthRequest="55" HeightRequest="55" VerticalOptions="Center" HorizontalOptions="Center"
+                                           BackgroundColor="LightSteelBlue" BorderColor="LightSteelBlue">
+                                        <views:SvgView HeightRequest="36" WidthRequest="36" Name="medication" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="Button_Clicked" CommandParameter="{Binding .}"></TapGestureRecognizer>
+                                        </Frame.GestureRecognizers>
+                                    </Frame>
+                                    <!--<Button Text="Take" Clicked="Button_Clicked" CommandParameter="{Binding .}" BackgroundColor="LightSteelBlue" 
+                                            TextColor="navy" CornerRadius="100" WidthRequest="95" HeightRequest="95" VerticalOptions="Center" HorizontalOptions="Center">
+                                    </Button>-->
                                     <controls:CircleProgress Progress="{Binding Progress}" HorizontalOptions="CenterAndExpand" HeightRequest="125" WidthRequest="125"></controls:CircleProgress>
                                 </Grid>
                             </StackLayout>
