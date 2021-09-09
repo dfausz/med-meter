@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:MedMeter.ViewModels"
+             xmlns:controls="clr-namespace:MedMeter.Controls"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             x:Class="MedMeter.MainPage">
+
+    <StackLayout Padding="0">
+        <CollectionView ItemsSource="{Binding Medicines}" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <ContentView Padding="8, 8, 8, 1">
+                        <Frame HasShadow="True" Visual="Material" CornerRadius="0" BorderColor="Gray">
+                            <StackLayout x:DataType="viewModels:MedicineViewModel" Orientation="Horizontal">
+                                <StackLayout HorizontalOptions="StartAndExpand" Margin="6">
+                                    <Label Text="{Binding Name}" TextColor="Black" FontSize="32"></Label>
+                                    <Label Text="{Binding LastTaken}"></Label>
+                                </StackLayout>
+                                <Grid>
+                                    <Button Text="Take" Clicked="Button_Clicked" CommandParameter="{Binding .}" BackgroundColor="LightSteelBlue" TextColor="navy" CornerRadius="100" WidthRequest="95" HeightRequest="95" VerticalOptions="Center" HorizontalOptions="Center">
+                                        
+                                    </Button>
+                                    <controls:CircleProgress Progress="{Binding Progress}" HorizontalOptions="CenterAndExpand" HeightRequest="125" WidthRequest="125"></controls:CircleProgress>
+                                </Grid>
+                            </StackLayout>
+                        </Frame>
+                    </ContentView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+
+</ContentPage>
