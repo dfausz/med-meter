@@ -1,6 +1,7 @@
 ﻿using MedMeter.Models;
 using System;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 namespace MedMeter.ViewModels
 {
@@ -33,6 +34,15 @@ namespace MedMeter.ViewModels
             }
         }
 
+        public string Text
+        {
+            get
+            {
+                if (IsCompleted) return "Take";
+                else return Math.Floor((DateTime.Now - LastTaken).TotalSeconds).ToString();
+            }
+        }
+
         public EventHandler<double> ProgressChanged;
 
         private bool IsCompleted = false;
@@ -41,15 +51,16 @@ namespace MedMeter.ViewModels
         {
             var hoursSinceLastTaken = (DateTime.Now - LastTaken).TotalSeconds;
             var newProgress = hoursSinceLastTaken / Hours;
-            if(newProgress <= 1.0 && !IsCompleted)
+            if(newProgress <= 1.0 || !IsCompleted)
             {
-                ProgressChanged?.Invoke(this, newProgress);
+                Progress = newProgress;
 
                 if(newProgress >= 1.0)
                 {
                     IsCompleted = true;
                 }
             }
+            OnPropertyChanged(nameof(Text));
         }
 
         private double progress = 0.0;

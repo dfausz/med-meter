@@ -8,35 +8,7 @@
              x:Class="MedMeter.MainPage">
 
     <StackLayout Padding="0">
-        <CollectionView ItemsSource="{Binding Medicines}" SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <ContentView Padding="8, 8, 8, 1">
-                        <Frame HasShadow="True" Visual="Material" CornerRadius="0" BorderColor="Gray">
-                            <StackLayout x:DataType="viewModels:MedicineViewModel" Orientation="Horizontal">
-                                <StackLayout HorizontalOptions="StartAndExpand" Margin="6">
-                                    <Label Text="{Binding Name}" TextColor="Black" FontSize="32"></Label>
-                                    <Label Text="{Binding LastTaken}"></Label>
-                                </StackLayout>
-                                <Grid>
-                                    <Frame CornerRadius="45" WidthRequest="55" HeightRequest="55" VerticalOptions="Center" HorizontalOptions="Center"
-                                           BackgroundColor="LightSteelBlue" BorderColor="LightSteelBlue">
-                                        <views:SvgView HeightRequest="36" WidthRequest="36" Name="medication" HorizontalOptions="Center" VerticalOptions="Center" />
-                                        <Frame.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="Button_Clicked" CommandParameter="{Binding .}"></TapGestureRecognizer>
-                                        </Frame.GestureRecognizers>
-                                    </Frame>
-                                    <!--<Button Text="Take" Clicked="Button_Clicked" CommandParameter="{Binding .}" BackgroundColor="LightSteelBlue" 
-                                            TextColor="navy" CornerRadius="100" WidthRequest="95" HeightRequest="95" VerticalOptions="Center" HorizontalOptions="Center">
-                                    </Button>-->
-                                    <controls:CircleProgress Progress="{Binding Progress}" HorizontalOptions="CenterAndExpand" HeightRequest="125" WidthRequest="125"></controls:CircleProgress>
-                                </Grid>
-                            </StackLayout>
-                        </Frame>
-                    </ContentView>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <views:MedicineCollection></views:MedicineCollection>
     </StackLayout>
 
 </ContentPage>

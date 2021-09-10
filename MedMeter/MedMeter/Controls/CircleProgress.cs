@@ -12,6 +12,7 @@ namespace MedMeter.Controls
         public static readonly BindableProperty ProgressProperty =
             BindableProperty.Create(nameof(Progress), typeof(double), typeof(CircleProgress), 0.0, propertyChanged: OnPropertyChanged);
 
+        private double progress = 0.0;
         public double Progress
         {
             get { return (double)GetValue(ProgressProperty); }
@@ -21,6 +22,19 @@ namespace MedMeter.Controls
         private static void OnPropertyChanged(BindableObject bindable, object oldVal, object newVal)
         {
             var circleProgress = bindable as CircleProgress;
+            AnimateProgress(circleProgress, (double)oldVal, (double)newVal);
+        }
+
+        private static void AnimateProgress(CircleProgress circleProgress, double oldValue, double newValue)
+        {
+            uint timeToAnimate = 1000;
+            Animation animation = new Animation(value => AnimateCallback(value, circleProgress), oldValue, newValue, easing: Easing.CubicOut);
+            animation.Commit(circleProgress, Guid.NewGuid().ToString(), length: timeToAnimate, finished: (l, c) => animation = null, rate: 11);
+        }
+
+        private static void AnimateCallback(double value, CircleProgress circleProgress)
+        {
+            circleProgress.progress = value;
             circleProgress?.InvalidateSurface();
         }
 
@@ -48,7 +62,7 @@ namespace MedMeter.Controls
 
         private void DrawProgressCircle(SKImageInfo info, SKCanvas canvas)
         {
-            float progressAngle = 360 * (float)Progress;
+            float progressAngle = 360 * (float)progress;
             int size = Math.Min(info.Width, info.Height);
 
             var gray = new SKPaint
@@ -62,7 +76,7 @@ namespace MedMeter.Controls
 
             //DrawCircle(info, canvas, gray, 0, 360);
 
-            if (Progress <= 0.01) return;
+            if (progress <= 0.01) return;
 
             var shader = SKShader.CreateSweepGradient(
                 new SKPoint(size / 2, size / 2),

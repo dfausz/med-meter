@@ -9,11 +9,11 @@ using Xamarin.Forms;
 
 namespace MedMeter.ViewModels
 {
-    public class MainPageViewModel : BaseViewModel
+    public class MedicineCollectionViewModel : BaseViewModel
     {
         public ObservableCollection<MedicineViewModel> Medicines { get; }
 
-        public MainPageViewModel()
+        public MedicineCollectionViewModel()
         {
             Medicines = new ObservableCollection<MedicineViewModel>()
             {
