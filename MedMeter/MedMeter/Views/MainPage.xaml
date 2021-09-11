@@ -5,10 +5,13 @@
              xmlns:controls="clr-namespace:MedMeter.Controls"
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms" 
              xmlns:views="clr-namespace:MedMeter.Views"
-             x:Class="MedMeter.MainPage">
+             x:Class="MedMeter.Views.MainPage"
+             Title="MedMeter">
 
-    <StackLayout Padding="0">
-        <views:MedicineCollection></views:MedicineCollection>
-    </StackLayout>
+    <views:MedicineCollection x:Name="MedicineList"></views:MedicineCollection>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="PlusToolbarItem" Clicked="PlusToolbarItem_Clicked"></ToolbarItem>
+    </ContentPage.ToolbarItems>
 
 </ContentPage>

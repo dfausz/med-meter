@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:MedMeter.ViewModels"
              xmlns:controls="clr-namespace:MedMeter.Controls"
-             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms" 
              x:Class="MedMeter.Views.MedicineCollection">
   <ContentView.Content>
     <CollectionView ItemsSource="{Binding Medicines}" SelectionMode="None">
@@ -12,22 +11,14 @@
                 <ContentView Padding="8, 8, 8, 1">
                     <Frame HasShadow="True" Visual="Material" CornerRadius="0" BorderColor="Gray">
                         <StackLayout x:DataType="viewModels:MedicineViewModel" Orientation="Horizontal">
-                            <StackLayout HorizontalOptions="StartAndExpand" Margin="6">
-                                <Label Text="{Binding Name}" TextColor="Black" FontSize="32"></Label>
-                                <Label Text="{Binding LastTaken}"></Label>
+                            <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="6">
+                                <Label Text="{Binding Name}" TextColor="Black" FontSize="32" />
+                                <Label Text="{Binding HoursLeft}" Margin="8,4" />
                             </StackLayout>
                             <Grid>
-                                <!--<Frame CornerRadius="45" WidthRequest="55" HeightRequest="55" VerticalOptions="Center" HorizontalOptions="Center"
-                                        BackgroundColor="LightSteelBlue" BorderColor="LightSteelBlue">
-                                    <views:SvgView HeightRequest="36" WidthRequest="36" Name="medication" HorizontalOptions="Center" VerticalOptions="Center" />
-                                    <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="Button_Clicked" CommandParameter="{Binding .}"></TapGestureRecognizer>
-                                    </Frame.GestureRecognizers>
-                                </Frame>-->
-                                <Button Text="{Binding Text}" Clicked="Button_Clicked" CommandParameter="{Binding .}" BackgroundColor="LightSteelBlue" FontSize="Small"
-                                        TextColor="navy" CornerRadius="100" WidthRequest="95" HeightRequest="95" VerticalOptions="Center" HorizontalOptions="Center">
-                                </Button>
-                                <controls:CircleProgress Progress="{Binding Progress}" HorizontalOptions="CenterAndExpand" HeightRequest="125" WidthRequest="125"></controls:CircleProgress>
+                                <ImageButton Source="{Binding Icon}" Clicked="Button_Clicked" CommandParameter="{Binding .}" BackgroundColor="LightSteelBlue" Padding="16"
+                                             CornerRadius="100" WidthRequest="85" HeightRequest="85" VerticalOptions="Center" HorizontalOptions="Center" />
+                                <controls:CircleProgress Progress="{Binding Progress}" HorizontalOptions="CenterAndExpand" HeightRequest="115" WidthRequest="115" />
                             </Grid>
                         </StackLayout>
                     </Frame>

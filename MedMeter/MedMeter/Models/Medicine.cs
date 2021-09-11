@@ -4,6 +4,7 @@ using System;
 
 namespace MedMeter.Models
 {
+    [Table("Medicine")]
     public class Medicine
     {
         [PrimaryKey]
@@ -11,5 +12,15 @@ namespace MedMeter.Models
         public string Name { get; set; }
         public int Hours { get; set; }
         public DateTime LastTaken { get; set; }
+
+        public Medicine() { }
+
+        public Medicine(string name, int hours)
+        {
+            Id = Guid.NewGuid().ToString();
+            Name = name;
+            Hours = hours;
+            LastTaken = DateTime.MinValue;
+        }
     }
 }

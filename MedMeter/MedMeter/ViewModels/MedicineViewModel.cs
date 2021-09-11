@@ -1,7 +1,9 @@
 ﻿using MedMeter.Models;
+using MedMeter.Utilities;
 using System;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace MedMeter.ViewModels
 {
@@ -34,6 +36,36 @@ namespace MedMeter.ViewModels
             }
         }
 
+        public string HoursLeft
+        {
+            get
+            {
+                if (IsCompleted)
+                {
+                    return "Ready to take!";
+                }
+                else
+                {
+                    return $"{Hours - Math.Floor((DateTime.Now - LastTaken).TotalSeconds)} Hours Left";
+                }
+            }
+        }
+
+        public ImageSource Icon
+        {
+            get
+            {
+                if (IsCompleted)
+                {
+                    return ResourceLoader.GetImageSource("medication.png");
+                }
+                else
+                {
+                    return ResourceLoader.GetImageSource("hourglass.png");
+                }
+            }
+        }
+
         public string Text
         {
             get
@@ -45,7 +77,16 @@ namespace MedMeter.ViewModels
 
         public EventHandler<double> ProgressChanged;
 
-        private bool IsCompleted = false;
+        private bool isCompleted = true;
+        private bool IsCompleted
+        {
+            get => isCompleted;
+            set
+            {
+                SetProperty(ref isCompleted, value);
+                OnPropertyChanged(nameof(Icon));
+            }
+        }
 
         private void UpdateProgress()
         {
@@ -61,6 +102,7 @@ namespace MedMeter.ViewModels
                 }
             }
             OnPropertyChanged(nameof(Text));
+            OnPropertyChanged(nameof(HoursLeft));
         }
 
         private double progress = 0.0;

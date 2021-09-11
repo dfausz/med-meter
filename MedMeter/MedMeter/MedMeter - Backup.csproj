@@ -11,17 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\clock.png" />
-    <None Remove="Resources\hourglass.png" />
-    <None Remove="Resources\medication.png" />
+    <None Remove="Resources\svgs\medication.svg" />
+    <None Remove="Resources\svgs\plus.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\clock.png" />
-    <EmbeddedResource Include="Resources\hourglass.png" />
-    <EmbeddedResource Include="Resources\medication.png" />
-    <EmbeddedResource Include="Resources\medication.svg" />
-    <EmbeddedResource Include="Resources\plus.png" />
+    <EmbeddedResource Include="Resources\svgs\medication.svg" />
+    <EmbeddedResource Include="Resources\svgs\plus.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,11 +38,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\AddMedicinePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Views\MedicineCollectionView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="NewFolder1\" />
+    <Folder Include="NewFolder\" />
   </ItemGroup>
 </Project>

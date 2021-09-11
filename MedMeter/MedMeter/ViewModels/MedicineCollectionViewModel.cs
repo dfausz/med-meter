@@ -1,26 +1,33 @@
 ﻿using MedMeter.Models;
+using MedMeter.Services;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace MedMeter.ViewModels
 {
     public class MedicineCollectionViewModel : BaseViewModel
     {
-        public ObservableCollection<MedicineViewModel> Medicines { get; }
+        private DataStore<Medicine> DataStore;
+
+        private List<MedicineViewModel> medicines = new List<MedicineViewModel>();
+        public List<MedicineViewModel> Medicines
+        {
+            get => medicines;
+            set => SetProperty(ref medicines, value);
+        }
 
         public MedicineCollectionViewModel()
         {
-            Medicines = new ObservableCollection<MedicineViewModel>()
-            {
-                new MedicineViewModel(new Medicine { Id = "1", Name = "Tylenol", Hours = 60, LastTaken = DateTime.Now.AddSeconds(-60) }),
-                new MedicineViewModel(new Medicine { Id = "2", Name = "Ibuprofen", Hours = 40, LastTaken = DateTime.Now.AddSeconds(-40) }),
-                new MedicineViewModel(new Medicine { Id = "3", Name = "Losartan", Hours = 240, LastTaken = DateTime.Now.AddSeconds(-260) })
-            };
+            DataStore = new DataStore<Medicine>();
+            LoadMedicine();
+        }
+
+        public async void LoadMedicine()
+        {
+            IList<Medicine> medicineModels = await DataStore.GetItemsAsync();
+            IEnumerable<MedicineViewModel> medicineViewModelList = medicineModels.Select(med => new MedicineViewModel(med));
+            Medicines = medicineViewModelList.ToList();
         }
 
         public void TakeMedicine(MedicineViewModel medicine)

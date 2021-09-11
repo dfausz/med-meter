@@ -1,6 +1,5 @@
-﻿using System;
+﻿using MedMeter.Views;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace MedMeter
 {
@@ -10,7 +9,7 @@ namespace MedMeter
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new MainPage());
         }
 
         protected override void OnStart()

@@ -55,7 +55,7 @@ namespace MedMeter.Services
             return await Database.GetAsync<T>(id);
         }
 
-        public async Task<IList<T>> GetItemsAsync( )
+        public async Task<IList<T>> GetItemsAsync()
         {
             var mapping = await Database.GetMappingAsync<T>();
             return await Database.QueryAsync<T>($"select * from {mapping.TableName}");

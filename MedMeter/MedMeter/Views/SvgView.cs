@@ -1,4 +1,5 @@
-﻿using SkiaSharp;
+﻿using MedMeter.Utilities;
+using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using System;
 using System.IO;
@@ -34,9 +35,7 @@ namespace MedMeter.Views
 
             try
             {
-                var assembly = Assembly.GetExecutingAssembly();
-                string resourceName = assembly.GetManifestResourceNames().Single(name => name.EndsWith($"{Name}.svg"));
-                using (var stream = new StreamReader(assembly.GetManifestResourceStream(resourceName)))
+                using (var stream = ResourceLoader.GetStreamFromResourceName($"{Name}.svg"))
                 {
                     var svg = new SkiaSharp.Extended.Svg.SKSvg();
                     svg.Load(stream.BaseStream);
