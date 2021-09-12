@@ -17,7 +17,7 @@ namespace MedMeter.Views
 
             Callback = callback;
 
-            ViewModel = new AddMedicineViewModel(new DataStore<Medicine>());
+            ViewModel = new AddMedicineViewModel();
             BindingContext = ViewModel;
         }
 

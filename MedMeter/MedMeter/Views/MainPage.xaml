@@ -1,17 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewModels="clr-namespace:MedMeter.ViewModels"
-             xmlns:controls="clr-namespace:MedMeter.Controls"
-             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms" 
+             xmlns:materialDesign="clr-namespace:MaterialDesign"
              xmlns:views="clr-namespace:MedMeter.Views"
              x:Class="MedMeter.Views.MainPage"
              Title="MedMeter">
 
-    <views:MedicineCollection x:Name="MedicineList"></views:MedicineCollection>
+    <StackLayout Orientation="Horizontal">
+        <!--<StackLayout.Background>
+            <LinearGradientBrush StartPoint="0.75,0" EndPoint="1,0.75">
+                <GradientStop Color="White"    Offset=".9" />
+                <GradientStop Color="#dbffff" Offset=".91" />
+            </LinearGradientBrush>
+        </StackLayout.Background>-->
+        <BoxView />
+        <views:MedicineCollection x:Name="MedicineList"></views:MedicineCollection>
+        <BoxView />
+    </StackLayout>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="PlusToolbarItem" Clicked="PlusToolbarItem_Clicked"></ToolbarItem>
+        <ToolbarItem x:Name="ToolbarPlus" Clicked="PlusToolbarItem_Clicked" />
     </ContentPage.ToolbarItems>
 
 </ContentPage>

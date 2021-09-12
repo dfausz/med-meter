@@ -17,7 +17,7 @@ namespace MedMeter.Views
         }
         private void Button_Clicked(object sender, EventArgs e)
         {
-            ViewModel.TakeMedicine((sender as ImageButton).CommandParameter as MedicineViewModel);
+            ViewModel.TakeMedicine((sender as Button).CommandParameter as MedicineViewModel);
         }
     }
 }

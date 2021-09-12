@@ -9,8 +9,7 @@ namespace MedMeter.Views
         {
             InitializeComponent();
 
-            IconImageSource = ImageSource.FromStream(() => ResourceLoader.GetStreamFromResourceName("clock.png").BaseStream);
-            PlusToolbarItem.IconImageSource = ImageSource.FromStream(() => ResourceLoader.GetStreamFromResourceName("plus.png").BaseStream);
+            ToolbarPlus.IconImageSource = ResourceLoader.GetImageSource("plus.png");
         }
 
         private async void PlusToolbarItem_Clicked(object sender, System.EventArgs e)

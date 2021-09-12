@@ -3,28 +3,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:MedMeter.ViewModels"
              xmlns:controls="clr-namespace:MedMeter.Controls"
-             x:Class="MedMeter.Views.MedicineCollection">
-  <ContentView.Content>
-    <CollectionView ItemsSource="{Binding Medicines}" SelectionMode="None">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <ContentView Padding="8, 8, 8, 1">
-                    <Frame HasShadow="True" Visual="Material" CornerRadius="0" BorderColor="Gray">
-                        <StackLayout x:DataType="viewModels:MedicineViewModel" Orientation="Horizontal">
-                            <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="6">
-                                <Label Text="{Binding Name}" TextColor="Black" FontSize="32" />
-                                <Label Text="{Binding HoursLeft}" Margin="8,4" />
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="MedMeter.Views.MedicineCollection"
+             Padding="0,8">
+    <ContentView.Content>
+        <CollectionView ItemsSource="{Binding Medicines}" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <ContentView>
+                        <Frame xct:ShadowEffect.Color="Black" xct:ShadowEffect.Radius="8" xct:ShadowEffect.OffsetY="1" Margin="12,8" CornerRadius="5">
+                            <StackLayout x:DataType="viewModels:MedicineViewModel" Orientation="Horizontal">
+                                <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="4" Spacing="0">
+                                    <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="26" />
+                                    <Label Text="{Binding HoursLeft}" Margin="10,0" FontSize="14" Opacity="0.5" FontAttributes="Italic" />
+                                </StackLayout>
+                                <Grid>
+                                    <Button Text="{Binding Icon}" FontFamily="MaterialIcons" FontSize="28" Clicked="Button_Clicked" CommandParameter="{Binding .}" BackgroundColor="#B7D3F2"
+                                                                CornerRadius="100" WidthRequest="65" HeightRequest="65" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                                    <controls:CircleProgress Progress="{Binding Progress}" HorizontalOptions="CenterAndExpand" HeightRequest="90" WidthRequest="90" BarWidth="10" />
+                                </Grid>
                             </StackLayout>
-                            <Grid>
-                                <ImageButton Source="{Binding Icon}" Clicked="Button_Clicked" CommandParameter="{Binding .}" BackgroundColor="LightSteelBlue" Padding="16"
-                                             CornerRadius="100" WidthRequest="85" HeightRequest="85" VerticalOptions="Center" HorizontalOptions="Center" />
-                                <controls:CircleProgress Progress="{Binding Progress}" HorizontalOptions="CenterAndExpand" HeightRequest="115" WidthRequest="115" />
-                            </Grid>
-                        </StackLayout>
-                    </Frame>
-                </ContentView>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
-  </ContentView.Content>
+                        </Frame>
+                    </ContentView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </ContentView.Content>
 </ContentView>

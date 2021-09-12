@@ -1,4 +1,6 @@
-﻿using MedMeter.Views;
+﻿using MedMeter.Models;
+using MedMeter.Services;
+using MedMeter.Views;
 using Xamarin.Forms;
 
 namespace MedMeter
@@ -8,6 +10,8 @@ namespace MedMeter
         public App()
         {
             InitializeComponent();
+
+            DependencyService.Register<IDataStore<Medicine>, DataStore<Medicine>>();
 
             MainPage = new NavigationPage(new MainPage());
         }

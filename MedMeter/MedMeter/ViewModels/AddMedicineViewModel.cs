@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace MedMeter.ViewModels
 {
@@ -11,9 +12,9 @@ namespace MedMeter.ViewModels
     {
         IDataStore<Medicine> DataStore;
 
-        public AddMedicineViewModel(IDataStore<Medicine> dataStore)
+        public AddMedicineViewModel()
         {
-            DataStore = dataStore;
+            DataStore = DependencyService.Get<IDataStore<Medicine>>();
         }
 
         public string Name { get; set; }

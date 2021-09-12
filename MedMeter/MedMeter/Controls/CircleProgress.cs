@@ -9,8 +9,9 @@ namespace MedMeter.Controls
 {
     public class CircleProgress : SKCanvasView
     {
+        #region ProgressProperty
         public static readonly BindableProperty ProgressProperty =
-            BindableProperty.Create(nameof(Progress), typeof(double), typeof(CircleProgress), 0.0, propertyChanged: OnPropertyChanged);
+            BindableProperty.Create(nameof(Progress), typeof(double), typeof(CircleProgress), 0.0, propertyChanged: OnAnimatePropertyChanged);
 
         private double progress = 0.0;
         public double Progress
@@ -19,7 +20,7 @@ namespace MedMeter.Controls
             set { SetValue(ProgressProperty, value); }
         }
 
-        private static void OnPropertyChanged(BindableObject bindable, object oldVal, object newVal)
+        private static void OnAnimatePropertyChanged(BindableObject bindable, object oldVal, object newVal)
         {
             var circleProgress = bindable as CircleProgress;
             AnimateProgress(circleProgress, (double)oldVal, (double)newVal);
@@ -37,6 +38,26 @@ namespace MedMeter.Controls
             circleProgress.progress = value;
             circleProgress?.InvalidateSurface();
         }
+        #endregion
+
+        #region BarWidthProperty
+        public static readonly BindableProperty BarWidthProperty =
+            BindableProperty.Create(nameof(BarWidth), typeof(float), typeof(CircleProgress), 10f, propertyChanged: OnPropertyChanged);
+
+        public float BarWidth
+        {
+            get { return (float)GetValue(BarWidthProperty); }
+            set { SetValue(BarWidthProperty, value); }
+        }
+
+        private static void OnPropertyChanged(BindableObject bindable, object oldVal, object newVal)
+        {
+            var circleProgress = bindable as CircleProgress;
+            circleProgress?.InvalidateSurface();
+        }
+        #endregion
+
+        private int StartAngle = -90;
 
         protected override void OnPaintSurface(SKPaintSurfaceEventArgs args)
         {
@@ -57,9 +78,6 @@ namespace MedMeter.Controls
             canvas.Restore();
         }
 
-        private float StrokeWidth = 20f;
-        private int StartAngle = -90;
-
         private void DrawProgressCircle(SKImageInfo info, SKCanvas canvas)
         {
             float progressAngle = 360 * (float)progress;
@@ -68,7 +86,7 @@ namespace MedMeter.Controls
             var gray = new SKPaint
             {
                 Color = Color.FromHex("#dbe1eb").ToSKColor(),
-                StrokeWidth = StrokeWidth,
+                StrokeWidth = BarWidth,
                 IsStroke = true,
                 IsAntialias = true,
                 StrokeCap = SKStrokeCap.Square
@@ -78,17 +96,22 @@ namespace MedMeter.Controls
 
             if (progress <= 0.01) return;
 
+            var lightGreen = Color.FromHex("#0fd07d").ToSKColor();
+            var darkGreen = Color.FromHex("#62C370").ToSKColor();
+            var lightBlue = Color.FromHex("#3dd6e6").ToSKColor();
+            var darkBlue = Color.FromHex("#043565").ToSKColor();
+
             var shader = SKShader.CreateSweepGradient(
                 new SKPoint(size / 2, size / 2),
                 new[]
                 {
-                    Color.FromHex("#0fd07d").ToSKColor(),
-                    Color.FromHex("#00b409").ToSKColor(),
-                    Color.FromHex("#0fd07d").ToSKColor(),
-                    Color.FromHex("#3dd6e6").ToSKColor(),
-                    Color.FromHex("#1107cb").ToSKColor(),
-                    Color.FromHex("#1107cb").ToSKColor(),
-                    Color.FromHex("#3dd6e6").ToSKColor()
+                    lightGreen,
+                    darkGreen,
+                    lightGreen,
+                    lightBlue,
+                    darkBlue,
+                    darkBlue,
+                    lightBlue
                 },
                 new[]
                 {
@@ -104,7 +127,7 @@ namespace MedMeter.Controls
             var paint = new SKPaint
             {
                 Shader = shader,
-                StrokeWidth = StrokeWidth,
+                StrokeWidth = BarWidth,
                 IsStroke = true,
                 IsAntialias = true,
                 StrokeCap = SKStrokeCap.Square
@@ -120,10 +143,10 @@ namespace MedMeter.Controls
             using (SKPath path = new SKPath())
             {
                 SKRect rect = new SKRect(
-                    StrokeWidth,
-                    StrokeWidth,
-                    size - StrokeWidth,
-                    size - StrokeWidth);
+                    BarWidth,
+                    BarWidth,
+                    size - BarWidth,
+                    size - BarWidth);
 
                 path.AddArc(rect, startAngle, endAngle);
 

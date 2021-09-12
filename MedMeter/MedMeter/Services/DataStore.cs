@@ -27,7 +27,7 @@ namespace MedMeter.Services
             }
         }
 
-        private static SQLiteAsyncConnection Database;
+        private SQLiteAsyncConnection Database;
 
         public DataStore()
         {

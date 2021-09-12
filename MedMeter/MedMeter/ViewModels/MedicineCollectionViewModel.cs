@@ -3,12 +3,13 @@ using MedMeter.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Xamarin.Forms;
 
 namespace MedMeter.ViewModels
 {
     public class MedicineCollectionViewModel : BaseViewModel
     {
-        private DataStore<Medicine> DataStore;
+        private IDataStore<Medicine> DataStore;
 
         private List<MedicineViewModel> medicines = new List<MedicineViewModel>();
         public List<MedicineViewModel> Medicines
@@ -19,7 +20,7 @@ namespace MedMeter.ViewModels
 
         public MedicineCollectionViewModel()
         {
-            DataStore = new DataStore<Medicine>();
+            DataStore = DependencyService.Get<IDataStore<Medicine>>();
             LoadMedicine();
         }
 

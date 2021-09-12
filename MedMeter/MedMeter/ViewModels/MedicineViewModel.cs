@@ -1,8 +1,8 @@
-﻿using MedMeter.Models;
+﻿using MaterialDesign;
+using MedMeter.Models;
 using MedMeter.Utilities;
 using System;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace MedMeter.ViewModels
@@ -27,13 +27,21 @@ namespace MedMeter.ViewModels
         public DateTime LastTaken
         {
             get => lastTaken;
-            set
-            {
-                lastTaken = value;
-                IsCompleted = false;
-                OnPropertyChanged();
-                UpdateProgress();
-            }
+            set => SetProperty(ref lastTaken, value);
+        }
+
+        private bool isCompleted = true;
+        private bool IsCompleted
+        {
+            get => isCompleted;
+            set => SetProperty(ref isCompleted, value);
+        }
+
+        private double progress = 0.0;
+        public double Progress
+        {
+            get => progress;
+            set => SetProperty(ref progress, value);
         }
 
         public string HoursLeft
@@ -57,65 +65,21 @@ namespace MedMeter.ViewModels
             {
                 if (IsCompleted)
                 {
-                    return ResourceLoader.GetImageSource("medication.png");
+                    return MaterialDesignIcons.Medication;
                 }
                 else
                 {
-                    return ResourceLoader.GetImageSource("hourglass.png");
+                    return MaterialDesignIcons.HourglassEmpty;
                 }
             }
-        }
-
-        public string Text
-        {
-            get
-            {
-                if (IsCompleted) return "Take";
-                else return Math.Floor((DateTime.Now - LastTaken).TotalSeconds).ToString();
-            }
-        }
-
-        public EventHandler<double> ProgressChanged;
-
-        private bool isCompleted = true;
-        private bool IsCompleted
-        {
-            get => isCompleted;
-            set
-            {
-                SetProperty(ref isCompleted, value);
-                OnPropertyChanged(nameof(Icon));
-            }
-        }
-
-        private void UpdateProgress()
-        {
-            var hoursSinceLastTaken = (DateTime.Now - LastTaken).TotalSeconds;
-            var newProgress = hoursSinceLastTaken / Hours;
-            if(newProgress <= 1.0 || !IsCompleted)
-            {
-                Progress = newProgress;
-
-                if(newProgress >= 1.0)
-                {
-                    IsCompleted = true;
-                }
-            }
-            OnPropertyChanged(nameof(Text));
-            OnPropertyChanged(nameof(HoursLeft));
-        }
-
-        private double progress = 0.0;
-        public double Progress
-        {
-            get => progress;
-            set => SetProperty(ref progress, value);
         }
 
         private IObservable<long> Refresher { get; set; } = Observable.Interval(TimeSpan.FromSeconds(1));
 
         public MedicineViewModel(Medicine medicine)
         {
+            PropertyChanged += MedicineViewModel_PropertyChanged;
+
             Name = medicine.Name;
             Hours = medicine.Hours;
             LastTaken = medicine.LastTaken;
@@ -124,6 +88,39 @@ namespace MedMeter.ViewModels
             {
                 UpdateProgress();
             });
+        }
+
+        private void UpdateProgress()
+        {
+            var hoursSinceLastTaken = (DateTime.Now - LastTaken).TotalSeconds;
+            var newProgress = hoursSinceLastTaken / Hours;
+            if (newProgress <= 1.0 || !IsCompleted)
+            {
+                Progress = newProgress;
+
+                if (newProgress >= 1.0)
+                {
+                    IsCompleted = true;
+                }
+            }
+        }
+
+        private void MedicineViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            switch(e.PropertyName)
+            {
+                case nameof(IsCompleted):
+                    OnPropertyChanged(nameof(Icon));
+                    break;
+                case nameof(LastTaken):
+                    IsCompleted = false;
+                    UpdateProgress();
+                    break;
+                case nameof(Progress):
+                    OnPropertyChanged(nameof(HoursLeft));
+                    break;
+
+            }
         }
     }
 }
