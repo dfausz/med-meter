@@ -13,16 +13,11 @@
   <ItemGroup>
     <None Remove="Resources\clock.png" />
     <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
-    <None Remove="Resources\hourglass.png" />
-    <None Remove="Resources\medication.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\clock.png" />
     <EmbeddedResource Include="Resources\Fonts\MaterialIcons-Regular.ttf" />
-    <EmbeddedResource Include="Resources\hourglass.png" />
-    <EmbeddedResource Include="Resources\medication.png" />
-    <EmbeddedResource Include="Resources\medication.svg" />
     <EmbeddedResource Include="Resources\plus.png" />
   </ItemGroup>
 
