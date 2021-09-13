@@ -1,10 +1,6 @@
 ﻿using MedMeter.Utilities;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
-using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 using Xamarin.Forms;
 
 namespace MedMeter.Views

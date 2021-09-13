@@ -1,5 +1,4 @@
-﻿using MedMeter.ViewModels;
-using SQLite;
+﻿using SQLite;
 using System;
 
 namespace MedMeter.Models

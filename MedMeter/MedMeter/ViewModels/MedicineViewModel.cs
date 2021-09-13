@@ -1,6 +1,5 @@
 ﻿using MaterialDesign;
 using MedMeter.Models;
-using MedMeter.Utilities;
 using System;
 using System.Reactive.Linq;
 using Xamarin.Forms;
@@ -124,7 +123,7 @@ namespace MedMeter.ViewModels
 
         private void MedicineViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            switch(e.PropertyName)
+            switch (e.PropertyName)
             {
                 case nameof(IsCompleted):
                     OnPropertyChanged(nameof(Icon));

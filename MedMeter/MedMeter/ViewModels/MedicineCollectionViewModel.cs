@@ -31,9 +31,10 @@ namespace MedMeter.ViewModels
             Medicines = medicineViewModelList.ToList();
         }
 
-        public void TakeMedicine(MedicineViewModel medicine)
+        public async void TakeMedicine(MedicineViewModel medicine)
         {
             medicine.LastTaken = DateTime.Now;
+            await DataStore.UpdateItemAsync(medicine.GetMedicine());
         }
     }
 }
