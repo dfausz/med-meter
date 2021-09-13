@@ -14,7 +14,7 @@ namespace MedMeter.Views
 
         private async void PlusToolbarItem_Clicked(object sender, System.EventArgs e)
         {
-            await Navigation.PushAsync(new AddMedicinePage(() => MedicineList.ViewModel.LoadMedicine()));
+            await Navigation.PushAsync(new AddMedicinePage());
         }
     }
 }

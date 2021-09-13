@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MedMeter.Views.UpdateMedicinePage"
+             Title="Update Medicine">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Margin="24" Spacing="24">
+                <StackLayout>
+                    <Label Text="Medicine Name:" FontSize="Medium"></Label>
+                    <Entry Keyboard="Text" Text="{Binding Name}"></Entry>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Hours:" FontSize="Medium"></Label>
+                    <Entry Keyboard="Numeric" Text="{Binding Hours}"></Entry>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout VerticalOptions="EndAndExpand" Padding="12,16">
+                <Button Text="Update" Clicked="Update"></Button>
+                <Button Text="Delete" Clicked="Delete" BackgroundColor="#A9302C" TextColor="White"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

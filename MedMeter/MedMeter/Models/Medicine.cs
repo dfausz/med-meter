@@ -10,12 +10,12 @@ namespace MedMeter.Models
         [PrimaryKey]
         public string Id { get; set; }
         public string Name { get; set; }
-        public int Hours { get; set; }
+        public double Hours { get; set; }
         public DateTime LastTaken { get; set; }
 
         public Medicine() { }
 
-        public Medicine(string name, int hours)
+        public Medicine(string name, double hours)
         {
             Id = Guid.NewGuid().ToString();
             Name = name;

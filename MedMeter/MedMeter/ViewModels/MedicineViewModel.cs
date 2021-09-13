@@ -9,15 +9,17 @@ namespace MedMeter.ViewModels
 {
     public class MedicineViewModel : BaseViewModel
     {
-        private string name = "";
+        private string Id = string.Empty;
+
+        private string name = string.Empty;
         public string Name
         {
             get => name;
             set => SetProperty(ref name, value);
         }
 
-        private int hours = 0;
-        public int Hours
+        private double hours = 0.0;
+        public double Hours
         {
             get => hours;
             set => SetProperty(ref hours, value);
@@ -54,7 +56,10 @@ namespace MedMeter.ViewModels
                 }
                 else
                 {
-                    return $"{Hours - Math.Floor((DateTime.Now - LastTaken).TotalSeconds)} Hours Left";
+                    TimeSpan timeElapsed = DateTime.Now - LastTaken;
+                    var hoursLeft = Hours - 1 - timeElapsed.Minutes;
+                    var minutesLeft = 59 - timeElapsed.Seconds;
+                    return $"{hoursLeft:00}:{minutesLeft:00} Left";
                 }
             }
         }
@@ -74,12 +79,24 @@ namespace MedMeter.ViewModels
             }
         }
 
+        public Medicine GetMedicine()
+        {
+            return new Medicine()
+            {
+                Id = Id,
+                Name = Name,
+                Hours = Hours,
+                LastTaken = LastTaken
+            };
+        }
+
         private IObservable<long> Refresher { get; set; } = Observable.Interval(TimeSpan.FromSeconds(1));
 
         public MedicineViewModel(Medicine medicine)
         {
             PropertyChanged += MedicineViewModel_PropertyChanged;
 
+            Id = medicine.Id;
             Name = medicine.Name;
             Hours = medicine.Hours;
             LastTaken = medicine.LastTaken;
@@ -92,7 +109,7 @@ namespace MedMeter.ViewModels
 
         private void UpdateProgress()
         {
-            var hoursSinceLastTaken = (DateTime.Now - LastTaken).TotalSeconds;
+            var hoursSinceLastTaken = (DateTime.Now - LastTaken).TotalMinutes;
             var newProgress = hoursSinceLastTaken / Hours;
             if (newProgress <= 1.0 || !IsCompleted)
             {

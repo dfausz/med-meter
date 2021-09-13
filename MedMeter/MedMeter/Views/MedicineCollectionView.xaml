@@ -15,7 +15,7 @@
                             <StackLayout x:DataType="viewModels:MedicineViewModel" Orientation="Horizontal">
                                 <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="4" Spacing="0">
                                     <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="26" />
-                                    <Label Text="{Binding HoursLeft}" Margin="10,0" FontSize="14" Opacity="0.5" FontAttributes="Italic" />
+                                    <Label Text="{Binding HoursLeft}" Margin="8,0" FontSize="14" Opacity="0.65" FontFamily="Merienda" />
                                 </StackLayout>
                                 <Grid>
                                     <Button Text="{Binding Icon}" FontFamily="MaterialIcons" FontSize="28" Clicked="Button_Clicked" CommandParameter="{Binding .}" BackgroundColor="#B7D3F2"
@@ -23,6 +23,9 @@
                                     <controls:CircleProgress Progress="{Binding Progress}" HorizontalOptions="CenterAndExpand" HeightRequest="90" WidthRequest="90" BarWidth="10" />
                                 </Grid>
                             </StackLayout>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="UpdateMedicine" CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
                         </Frame>
                     </ContentView>
                 </DataTemplate>

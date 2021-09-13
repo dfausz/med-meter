@@ -13,11 +13,13 @@
   <ItemGroup>
     <None Remove="Resources\clock.png" />
     <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
+    <None Remove="Resources\Fonts\Merienda-Regular.ttf" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\clock.png" />
     <EmbeddedResource Include="Resources\Fonts\MaterialIcons-Regular.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Merienda-Regular.ttf" />
     <EmbeddedResource Include="Resources\plus.png" />
   </ItemGroup>
 
@@ -37,6 +39,9 @@
     <Compile Update="Views\MedicineCollectionView.xaml.cs">
       <DependentUpon>MedicineCollectionView.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\UpdateMedicinePage.xaml.cs">
+      <DependentUpon>UpdateMedicinePage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +49,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\MedicineCollectionView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\UpdateMedicinePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
