@@ -13,7 +13,7 @@
                 <Label Text="Hours:" FontSize="Medium"></Label>
                 <Entry Keyboard="Numeric" Text="{Binding Hours}"></Entry>
             </StackLayout>
-            <Button Text="Save" VerticalOptions="EndAndExpand" Clicked="Button_Clicked"></Button>
+            <Button Text="Save" VerticalOptions="EndAndExpand" Command="{Binding SaveMedicationCommand}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

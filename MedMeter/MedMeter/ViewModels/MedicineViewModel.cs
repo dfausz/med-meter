@@ -1,7 +1,10 @@
 ﻿using MaterialDesign;
 using MedMeter.Models;
+using MedMeter.Services;
+using MedMeter.Views;
 using System;
 using System.Reactive.Linq;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace MedMeter.ViewModels
@@ -89,6 +92,11 @@ namespace MedMeter.ViewModels
             };
         }
 
+        public ICommand TakeMedicineCommand { get; set; }
+        public ICommand UpdateMedicineCommand { get; set; }
+
+        private IDataStore<Medicine> DataStore;
+
         private IObservable<long> Refresher { get; set; } = Observable.Interval(TimeSpan.FromSeconds(1));
 
         public MedicineViewModel(Medicine medicine)
@@ -99,6 +107,11 @@ namespace MedMeter.ViewModels
             Name = medicine.Name;
             Hours = medicine.Hours;
             LastTaken = medicine.LastTaken;
+
+            DataStore = DependencyService.Get<IDataStore<Medicine>>();
+
+            TakeMedicineCommand = new Command(TakeMedicine);
+            UpdateMedicineCommand = new Command(UpdateMedicine);
 
             Refresher.Subscribe((_) =>
             {
@@ -121,12 +134,34 @@ namespace MedMeter.ViewModels
             }
         }
 
+        private async void TakeMedicine()
+        {
+            if (IsCompleted)
+            {
+                LastTaken = DateTime.Now;
+            }
+            else
+            {
+                IsCompleted = true;
+                LastTaken = DateTime.MinValue;
+            }
+
+            await DataStore.UpdateItemAsync(GetMedicine());
+        }
+
+        private void UpdateMedicine()
+        {
+            var updateMedicineViewModel = new UpdateMedicineViewModel(this);
+            App.Current.MainPage.Navigation.PushAsync(new UpdateMedicinePage(updateMedicineViewModel));
+        }
+
         private void MedicineViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
                 case nameof(IsCompleted):
                     OnPropertyChanged(nameof(Icon));
+                    OnPropertyChanged(nameof(HoursLeft));
                     break;
                 case nameof(LastTaken):
                     IsCompleted = false;

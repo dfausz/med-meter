@@ -28,7 +28,7 @@ namespace MedMeter.Controls
 
         private static void AnimateProgress(CircleProgress circleProgress, double oldValue, double newValue)
         {
-            uint timeToAnimate = 1000;
+            uint timeToAnimate = 1500;
             Animation animation = new Animation(value => AnimateCallback(value, circleProgress), oldValue, newValue, easing: Easing.CubicOut);
             animation.Commit(circleProgress, Guid.NewGuid().ToString(), length: timeToAnimate, finished: (l, c) => animation = null, rate: 11);
         }
@@ -82,17 +82,6 @@ namespace MedMeter.Controls
         {
             float progressAngle = 360 * (float)progress;
             int size = Math.Min(info.Width, info.Height);
-
-            var gray = new SKPaint
-            {
-                Color = Color.FromHex("#dbe1eb").ToSKColor(),
-                StrokeWidth = BarWidth,
-                IsStroke = true,
-                IsAntialias = true,
-                StrokeCap = SKStrokeCap.Square
-            };
-
-            //DrawCircle(info, canvas, gray, 0, 360);
 
             if (progress <= 0.01) return;
 

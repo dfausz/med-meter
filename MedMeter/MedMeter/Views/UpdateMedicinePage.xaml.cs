@@ -15,17 +15,5 @@ namespace MedMeter.Views
             ViewModel = viewModel;
             BindingContext = ViewModel;
         }
-
-        private async void Update(object sender, EventArgs e)
-        {
-            await ViewModel.UpdateMedicineAsync();
-            await Navigation.PopAsync();
-        }
-
-        private async void Delete(object sender, EventArgs e)
-        {
-            await ViewModel.DeleteMedicineAsync();
-            await Navigation.PopAsync();
-        }
     }
 }

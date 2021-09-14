@@ -16,8 +16,8 @@
                 </StackLayout>
             </StackLayout>
             <StackLayout VerticalOptions="EndAndExpand" Padding="12,16">
-                <Button Text="Update" Clicked="Update"></Button>
-                <Button Text="Delete" Clicked="Delete" BackgroundColor="#A9302C" TextColor="White"></Button>
+                <Button Text="Update" Command="{Binding UpdateMedicationCommand}"></Button>
+                <Button Text="Delete" Command="{Binding DeleteMedicationCommand}" BackgroundColor="#A9302C" TextColor="White"></Button>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

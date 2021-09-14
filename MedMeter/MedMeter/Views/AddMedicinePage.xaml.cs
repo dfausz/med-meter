@@ -15,11 +15,5 @@ namespace MedMeter.Views
             ViewModel = new AddMedicineViewModel();
             BindingContext = ViewModel;
         }
-
-        private async void Button_Clicked(object sender, EventArgs e)
-        {
-            await ViewModel.SaveNewMedicineAsync();
-            await Navigation.PopAsync();
-        }
     }
 }
