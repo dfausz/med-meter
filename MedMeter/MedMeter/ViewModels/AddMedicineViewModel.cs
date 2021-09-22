@@ -1,6 +1,8 @@
 ﻿using MedMeter.Models;
 using MedMeter.Services;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -13,27 +15,27 @@ namespace MedMeter.ViewModels
         public double Hours { get; set; }
         public ICommand SaveMedicationCommand { get; set; }
 
-        IDataStore<Medicine> DataStore;
+        private IDataStore<Medicine> DataStore;
+        private IDialogService DialogService;
 
-        public AddMedicineViewModel()
+        public AddMedicineViewModel(IDataStore<Medicine> dataStore, IDialogService dialogService)
         {
-            DataStore = DependencyService.Get<IDataStore<Medicine>>();
+            DataStore = dataStore;
+            DialogService = dialogService;
 
             SaveMedicationCommand = new Command(SaveMedication);
         }
 
-        private async void SaveMedication()
+        public async void SaveMedication()
         {
-            await SaveNewMedicineAsync();
-            await App.Current.MainPage.Navigation.PopAsync();
+            var MedicineToSave = new Medicine(Name, Hours);
+            await SaveNewMedicineAsync(MedicineToSave);
+            await DialogService.CloseDialogAsync();
         }
 
-        private async Task SaveNewMedicineAsync()
+        private async Task SaveNewMedicineAsync(Medicine medicineToSave)
         {
-            await DataStore.AddItemAsync(new Medicine(Name, Hours));
-            DependencyService.Get<MedicineCollectionViewModel>().LoadMedicine();
-
-            SaveMedicationCommand = new Command(SaveMedication);
+            await DataStore.AddItemAsync(medicineToSave);
         }
     }
 }

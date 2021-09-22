@@ -6,17 +6,8 @@
              x:Class="MedMeter.Views.MainPage"
              Title="MedMeter">
 
-    <StackLayout Orientation="Horizontal">
-        <!--<StackLayout.Background>
-            <LinearGradientBrush StartPoint="0.75,0" EndPoint="1,0.75">
-                <GradientStop Color="White"    Offset=".9" />
-                <GradientStop Color="#dbffff" Offset=".91" />
-            </LinearGradientBrush>
-        </StackLayout.Background>-->
-        <BoxView />
-        <views:MedicineCollection x:Name="MedicineList"></views:MedicineCollection>
-        <BoxView />
-    </StackLayout>
+
+    <views:MedicineCollection x:Name="MedicineList"></views:MedicineCollection>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="ToolbarPlus" Clicked="PlusToolbarItem_Clicked" />

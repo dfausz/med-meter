@@ -1,10 +1,9 @@
 ﻿using MedMeter.Models;
 using MedMeter.Services;
-using MedMeter.Views;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Input;
-using Xamarin.Forms;
+using System.Reactive.Linq;
+using System;
 
 namespace MedMeter.ViewModels
 {
@@ -18,17 +17,27 @@ namespace MedMeter.ViewModels
         }
 
         private IDataStore<Medicine> DataStore;
+        private IDialogService DialogService;
 
-        public MedicineCollectionViewModel()
+        public MedicineCollectionViewModel(IDataStore<Medicine> dataStore, IDialogService dialogService)
         {
-            DataStore = DependencyService.Get<IDataStore<Medicine>>();
+            DataStore = dataStore;
+            DialogService = dialogService;
+
+            DataStore<Medicine>.DataChanged += (_,__) => LoadMedicine();
+
             LoadMedicine();
+        }
+
+        ~MedicineCollectionViewModel()
+        {
+            DataStore<Medicine>.DataChanged -= (_,__) => LoadMedicine();
         }
 
         public async void LoadMedicine()
         {
             IList<Medicine> medicineModels = await DataStore.GetItemsAsync();
-            IEnumerable<MedicineViewModel> medicineViewModelList = medicineModels.Select(med => new MedicineViewModel(med));
+            IEnumerable<MedicineViewModel> medicineViewModelList = medicineModels.Select(med => new MedicineViewModel(DataStore, DialogService, med));
             Medicines = medicineViewModelList.ToList();
         }
     }

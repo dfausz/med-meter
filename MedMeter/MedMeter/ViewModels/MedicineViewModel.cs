@@ -4,7 +4,9 @@ using MedMeter.Services;
 using MedMeter.Views;
 using System;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 
 namespace MedMeter.ViewModels
@@ -35,7 +37,7 @@ namespace MedMeter.ViewModels
         }
 
         private bool isCompleted = true;
-        private bool IsCompleted
+        public bool IsCompleted
         {
             get => isCompleted;
             set => SetProperty(ref isCompleted, value);
@@ -59,9 +61,26 @@ namespace MedMeter.ViewModels
                 else
                 {
                     TimeSpan timeElapsed = DateTime.Now - LastTaken;
-                    var hoursLeft = Hours - 1 - timeElapsed.Minutes;
-                    var minutesLeft = 59 - timeElapsed.Seconds;
-                    return $"{hoursLeft:00}:{minutesLeft:00} Left";
+                    var hoursLeft = Hours - 1 - timeElapsed.Hours;
+                    var minutesLeft = 59 - timeElapsed.Minutes;
+                    return $"{hoursLeft:00}:{minutesLeft:00}";
+                }
+            }
+        }
+
+        public string SecondsLeft
+        {
+            get
+            {
+                if (IsCompleted)
+                {
+                    return string.Empty;
+                }
+                else
+                {
+                    TimeSpan timeElapsed = DateTime.Now - LastTaken;
+                    var secondsLeft = 59 - timeElapsed.Seconds;
+                    return $":{secondsLeft:00}";
                 }
             }
         }
@@ -96,10 +115,11 @@ namespace MedMeter.ViewModels
         public ICommand UpdateMedicineCommand { get; set; }
 
         private IDataStore<Medicine> DataStore;
+        private IDialogService DialogService;
 
         private IObservable<long> Refresher { get; set; } = Observable.Interval(TimeSpan.FromSeconds(1));
 
-        public MedicineViewModel(Medicine medicine)
+        public MedicineViewModel(IDataStore<Medicine> dataStore, IDialogService dialogService, Medicine medicine)
         {
             PropertyChanged += MedicineViewModel_PropertyChanged;
 
@@ -108,10 +128,11 @@ namespace MedMeter.ViewModels
             Hours = medicine.Hours;
             LastTaken = medicine.LastTaken;
 
-            DataStore = DependencyService.Get<IDataStore<Medicine>>();
+            DataStore = dataStore;
+            DialogService = dialogService;
 
-            TakeMedicineCommand = new Command(TakeMedicine);
-            UpdateMedicineCommand = new Command(UpdateMedicine);
+            TakeMedicineCommand = new AsyncCommand(ToggleMedicineTimer);
+            UpdateMedicineCommand = new AsyncCommand(UpdateMedicine);
 
             Refresher.Subscribe((_) =>
             {
@@ -119,9 +140,9 @@ namespace MedMeter.ViewModels
             });
         }
 
-        private void UpdateProgress()
+        public void UpdateProgress()
         {
-            var hoursSinceLastTaken = (DateTime.Now - LastTaken).TotalMinutes;
+            var hoursSinceLastTaken = (DateTime.Now - LastTaken).TotalHours;
             var newProgress = hoursSinceLastTaken / Hours;
             if (newProgress <= 1.0 || !IsCompleted)
             {
@@ -134,7 +155,7 @@ namespace MedMeter.ViewModels
             }
         }
 
-        private async void TakeMedicine()
+        public async Task ToggleMedicineTimer()
         {
             if (IsCompleted)
             {
@@ -149,10 +170,10 @@ namespace MedMeter.ViewModels
             await DataStore.UpdateItemAsync(GetMedicine());
         }
 
-        private void UpdateMedicine()
+        public async Task UpdateMedicine()
         {
-            var updateMedicineViewModel = new UpdateMedicineViewModel(this);
-            App.Current.MainPage.Navigation.PushAsync(new UpdateMedicinePage(updateMedicineViewModel));
+            var updateMedicineViewModel = new UpdateMedicineViewModel(DataStore, DialogService, this);
+            await DialogService.OpenDialogAsync(() => new UpdateMedicinePage(updateMedicineViewModel));
         }
 
         private void MedicineViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -162,6 +183,7 @@ namespace MedMeter.ViewModels
                 case nameof(IsCompleted):
                     OnPropertyChanged(nameof(Icon));
                     OnPropertyChanged(nameof(HoursLeft));
+                    OnPropertyChanged(nameof(SecondsLeft));
                     break;
                 case nameof(LastTaken):
                     IsCompleted = false;
@@ -169,6 +191,7 @@ namespace MedMeter.ViewModels
                     break;
                 case nameof(Progress):
                     OnPropertyChanged(nameof(HoursLeft));
+                    OnPropertyChanged(nameof(SecondsLeft));
                     break;
 
             }

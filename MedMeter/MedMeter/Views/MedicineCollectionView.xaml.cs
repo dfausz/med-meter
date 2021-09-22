@@ -1,5 +1,6 @@
-﻿using MedMeter.ViewModels;
-using System;
+﻿using MedMeter.Models;
+using MedMeter.Services;
+using MedMeter.ViewModels;
 using Xamarin.Forms;
 
 namespace MedMeter.Views
@@ -12,7 +13,7 @@ namespace MedMeter.Views
         {
             InitializeComponent();
 
-            ViewModel = DependencyService.Get<MedicineCollectionViewModel>();
+            ViewModel = new MedicineCollectionViewModel(new DataStore<Medicine>(), new DialogService());
             BindingContext = ViewModel;
         }
     }

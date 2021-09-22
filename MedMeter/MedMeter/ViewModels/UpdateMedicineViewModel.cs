@@ -2,7 +2,7 @@
 using MedMeter.Services;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms;
+using Xamarin.CommunityToolkit.ObjectModel;
 
 namespace MedMeter.ViewModels
 {
@@ -26,42 +26,38 @@ namespace MedMeter.ViewModels
         public ICommand DeleteMedicationCommand { get; set; }
 
         private Medicine Medicine;
-        private IDataStore<Medicine> DataStore;
 
-        public UpdateMedicineViewModel(MedicineViewModel medicineViewModel)
+        private IDataStore<Medicine> DataStore;
+        private IDialogService DialogService;
+
+        public UpdateMedicineViewModel(IDataStore<Medicine> dataStore, IDialogService dialogService, MedicineViewModel medicineViewModel)
         {
-            DataStore = DependencyService.Get<IDataStore<Medicine>>();
+            DataStore = dataStore;
+            DialogService = dialogService;
 
             Medicine = medicineViewModel.GetMedicine();
 
             Name = Medicine.Name;
             Hours = Medicine.Hours;
 
-            UpdateMedicationCommand = new Command(UpdateMedicineAsync);
-            DeleteMedicationCommand = new Command(DeleteMedicineAsync);
+            UpdateMedicationCommand = new AsyncCommand(UpdateMedicineAsync);
+            DeleteMedicationCommand = new AsyncCommand(DeleteMedicineAsync);
         }
 
-        private async void UpdateMedicineAsync()
+        public async Task UpdateMedicineAsync()
         {
             Medicine.Name = Name;
             Medicine.Hours = Hours;
             await DataStore.UpdateItemAsync(Medicine);
-            DependencyService.Get<MedicineCollectionViewModel>().LoadMedicine();
 
-            await NavigateBack();
+            await DialogService.CloseDialogAsync();
         }
 
-        private async void DeleteMedicineAsync()
+        public async Task DeleteMedicineAsync()
         {
             await DataStore.DeleteItemAsync(Medicine.Id);
-            DependencyService.Get<MedicineCollectionViewModel>().LoadMedicine();
 
-            await NavigateBack();
-        }
-
-        private async Task NavigateBack()
-        {
-            await App.Current.MainPage.Navigation.PopAsync();
+            await DialogService.CloseDialogAsync();
         }
     }
 }
