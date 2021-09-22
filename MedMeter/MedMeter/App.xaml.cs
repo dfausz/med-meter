@@ -5,8 +5,6 @@ namespace MedMeter
 {
     public partial class App : Application
     {
-        public const string AddMedicine = "AddMedicine";
-
         public App()
         {
             InitializeComponent();
