@@ -22,9 +22,9 @@
                                     </StackLayout>
                                 </StackLayout>
                                 <Grid>
+                                    <controls:CircleProgress Progress="{Binding Progress}" HorizontalOptions="CenterAndExpand" HeightRequest="90" WidthRequest="90" BarWidth="10" />
                                     <Button Text="{Binding Icon}" FontFamily="MaterialIcons" FontSize="28" Command="{Binding TakeMedicineCommand}" BackgroundColor="#B7D3F2"
                                                                 CornerRadius="100" WidthRequest="65" HeightRequest="65" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
-                                    <controls:CircleProgress Progress="{Binding Progress}" HorizontalOptions="CenterAndExpand" HeightRequest="90" WidthRequest="90" BarWidth="10" />
                                 </Grid>
                             </StackLayout>
                             <Frame.GestureRecognizers>
