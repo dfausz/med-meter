@@ -13,7 +13,7 @@ namespace MedMeter.ViewModels
 {
     public class MedicineViewModel : BaseViewModel
     {
-        private string Id = string.Empty;
+        public string Id = string.Empty;
 
         private string name = string.Empty;
         public string Name
@@ -109,6 +109,13 @@ namespace MedMeter.ViewModels
                 Hours = Hours,
                 LastTaken = LastTaken
             };
+        }
+
+        public void Update(Medicine medicine)
+        {
+            Name = medicine.Name;
+            Hours = medicine.Hours;
+            LastTaken = medicine.LastTaken;
         }
 
         public ICommand TakeMedicineCommand { get; set; }

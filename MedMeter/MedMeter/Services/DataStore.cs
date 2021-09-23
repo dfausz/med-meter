@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reactive.Linq;
 using System.Threading.Tasks;
 
 namespace MedMeter.Services
@@ -36,26 +35,28 @@ namespace MedMeter.Services
             Database.CreateTableAsync<T>();
         }
 
-        public static event EventHandler DataChanged;
+        public static event EventHandler<T> Added;
+        public static event EventHandler<T> Updated;
+        public static event EventHandler<string> Deleted;
 
         public async Task<int> AddItemAsync(T item)
         {
             var result = await Database.InsertAsync(item);
-            DataChanged?.Invoke(this, new EventArgs());
+            Added?.Invoke(this, item);
             return result;
         }
 
         public async Task<int> UpdateItemAsync(T item)
         {
             var result = await Database.UpdateAsync(item);
-            DataChanged?.Invoke(this, new EventArgs());
+            Updated?.Invoke(this, item);
             return result;
         }
 
         public async Task<int> DeleteItemAsync(string id)
         {
             var result = await Database.DeleteAsync<T>(id);
-            DataChanged?.Invoke(this, new EventArgs());
+            Deleted?.Invoke(this, id);
             return result;
         }
 

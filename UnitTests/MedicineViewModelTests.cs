@@ -116,5 +116,18 @@ namespace UnitTests
 
             DialogServiceMock.Verify(dialog => dialog.OpenDialogAsync(It.IsAny<Func<Page>>()));
         }
+
+        [TestMethod]
+        public void WillUpdateWithUpdateMedicine()
+        {
+            var expected = new Medicine() { Name = "NewTestName", Hours = 12.0, LastTaken = DateTime.Now.AddDays(-12) };
+            CreatePatient();
+
+            Patient.Update(expected);
+
+            Assert.AreEqual(expected.Name, Patient.Name);
+            Assert.AreEqual(expected.Hours, Patient.Hours);
+            Assert.AreEqual(expected.LastTaken, Patient.LastTaken);
+        }
     }
 }
