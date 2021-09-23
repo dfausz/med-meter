@@ -10,4 +10,4 @@ After clicking on the button the surround progress bar as well as the reminder t
 
 ![app screenshot](https://github.com/dfausz/MedMeter/blob/main/medmeter.png?raw=true)
 
-*** This screenshot was taken while running Android, while I believe this will work on iOS it has only been test on Android so far
+*** This screenshot was taken while running Android, while I believe this will work on iOS it has only been tested on Android so far.
