@@ -1,4 +1,5 @@
-﻿using MedMeter.Views;
+﻿using MedMeter.Services;
+using MedMeter.Views;
 using Xamarin.Forms;
 
 namespace MedMeter
@@ -8,6 +9,8 @@ namespace MedMeter
         public App()
         {
             InitializeComponent();
+
+            MedicineImageService.Init();
 
             MainPage = new NavigationPage(new MainPage());
         }

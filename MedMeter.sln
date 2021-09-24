@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedMeter.iOS", "MedMeter\Me
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedMeter", "MedMeter\MedMeter\MedMeter.csproj", "{D53BD13E-0032-426B-B91E-341E840A96D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{22A5ADEA-E8F5-4749-986E-5E54C08EE3A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedMeter.Test.Unit", "UnitTests\MedMeter.Test.Unit.csproj", "{22A5ADEA-E8F5-4749-986E-5E54C08EE3A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

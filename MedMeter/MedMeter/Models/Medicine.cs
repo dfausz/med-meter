@@ -11,6 +11,7 @@ namespace MedMeter.Models
         public string Name { get; set; }
         public double Hours { get; set; }
         public DateTime LastTaken { get; set; }
+        public string Image { get; set; }
 
         public Medicine() { }
 
@@ -20,6 +21,7 @@ namespace MedMeter.Models
             Name = name;
             Hours = hours;
             LastTaken = DateTime.MinValue;
+            Image = "medicine.png";
         }
     }
 }

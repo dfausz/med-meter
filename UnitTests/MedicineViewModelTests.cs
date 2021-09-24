@@ -1,14 +1,13 @@
 ﻿using MedMeter.Models;
 using MedMeter.Services;
 using MedMeter.ViewModels;
-using MedMeter.Views;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace UnitTests
+namespace MedMeter.Test.Unit
 {
     [TestClass]
     public class MedicineViewModelTests
@@ -120,7 +119,7 @@ namespace UnitTests
         [TestMethod]
         public void WillUpdateWithUpdateMedicine()
         {
-            var expected = new Medicine() { Name = "NewTestName", Hours = 12.0, LastTaken = DateTime.Now.AddDays(-12) };
+            var expected = new Medicine() { Name = "NewTestName", Hours = 12.0, LastTaken = DateTime.Now.AddDays(-12), Image = "FakeImage.gif" };
             CreatePatient();
 
             Patient.Update(expected);
@@ -128,6 +127,7 @@ namespace UnitTests
             Assert.AreEqual(expected.Name, Patient.Name);
             Assert.AreEqual(expected.Hours, Patient.Hours);
             Assert.AreEqual(expected.LastTaken, Patient.LastTaken);
+            Assert.AreEqual(expected.Image, Patient.Image);
         }
     }
 }

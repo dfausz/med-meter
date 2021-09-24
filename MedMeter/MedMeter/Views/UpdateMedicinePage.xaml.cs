@@ -1,5 +1,5 @@
-﻿using MedMeter.ViewModels;
-using System;
+﻿using MedMeter.Utilities;
+using MedMeter.ViewModels;
 using Xamarin.Forms;
 
 namespace MedMeter.Views
@@ -11,6 +11,8 @@ namespace MedMeter.Views
         public UpdateMedicinePage(UpdateMedicineViewModel viewModel)
         {
             InitializeComponent();
+
+            ToolbarAddPhoto.IconImageSource = ResourceLoader.GetImageSource("add_photo.png");
 
             ViewModel = viewModel;
             BindingContext = ViewModel;

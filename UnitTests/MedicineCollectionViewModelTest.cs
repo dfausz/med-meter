@@ -3,12 +3,11 @@ using MedMeter.Services;
 using MedMeter.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 
-namespace UnitTests
+namespace MedMeter.Test.Unit
 {
     [TestClass]
     public class MedicineCollectionViewModelTest

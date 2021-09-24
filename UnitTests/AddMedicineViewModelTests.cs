@@ -4,7 +4,7 @@ using MedMeter.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace UnitTests
+namespace MedMeter.Test.Unit
 {
     [TestClass]
     public class AddMedicineViewModelTests

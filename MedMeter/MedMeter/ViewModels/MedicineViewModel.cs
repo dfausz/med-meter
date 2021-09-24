@@ -15,6 +15,8 @@ namespace MedMeter.ViewModels
     {
         public string Id = string.Empty;
 
+        public string Image = string.Empty;
+
         private string name = string.Empty;
         public string Name
         {
@@ -107,7 +109,8 @@ namespace MedMeter.ViewModels
                 Id = Id,
                 Name = Name,
                 Hours = Hours,
-                LastTaken = LastTaken
+                LastTaken = LastTaken,
+                Image = Image
             };
         }
 
@@ -116,6 +119,7 @@ namespace MedMeter.ViewModels
             Name = medicine.Name;
             Hours = medicine.Hours;
             LastTaken = medicine.LastTaken;
+            Image = medicine.Image;
         }
 
         public ICommand TakeMedicineCommand { get; set; }
@@ -134,6 +138,7 @@ namespace MedMeter.ViewModels
             Name = medicine.Name;
             Hours = medicine.Hours;
             LastTaken = medicine.LastTaken;
+            Image = medicine.Image;
 
             DataStore = dataStore;
             DialogService = dialogService;
@@ -179,7 +184,7 @@ namespace MedMeter.ViewModels
 
         public async Task UpdateMedicine()
         {
-            var updateMedicineViewModel = new UpdateMedicineViewModel(DataStore, DialogService, this);
+            var updateMedicineViewModel = new UpdateMedicineViewModel(DataStore, DialogService, new MedicineImageService(DialogService), this);
             await DialogService.OpenDialogAsync(() => new UpdateMedicinePage(updateMedicineViewModel));
         }
 

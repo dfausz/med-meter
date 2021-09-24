@@ -34,7 +34,7 @@ namespace MedMeter.Views
                 using (var stream = ResourceLoader.GetStreamFromResourceName($"{Name}.svg"))
                 {
                     var svg = new SkiaSharp.Extended.Svg.SKSvg();
-                    svg.Load(stream.BaseStream);
+                    svg.Load(stream);
                     canvas.DrawPicture(svg.Picture);
                 }
             }

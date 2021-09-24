@@ -8,16 +8,16 @@ namespace MedMeter.Utilities
 {
     public class ResourceLoader
     {
-        public static StreamReader GetStreamFromResourceName(string name)
+        public static Stream GetStreamFromResourceName(string name)
         {
             var assembly = Assembly.GetExecutingAssembly();
             string resourceName = assembly.GetManifestResourceNames().Single(resource => resource.EndsWith(name));
-            return new StreamReader(assembly.GetManifestResourceStream(resourceName));
+            return new StreamReader(assembly.GetManifestResourceStream(resourceName)).BaseStream;
         }
 
         public static ImageSource GetImageSource(string name)
         {
-            return ImageSource.FromStream(() => GetStreamFromResourceName(name).BaseStream);
+            return ImageSource.FromStream(() => GetStreamFromResourceName(name));
         }
     }
 }

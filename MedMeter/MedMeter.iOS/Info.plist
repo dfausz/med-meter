@@ -34,5 +34,13 @@
     <string>MedMeter</string>
     <key>XSAppIconAssets</key>
     <string>Assets.xcassets/AppIcon.appiconset</string>
+    <key>NSCameraUsageDescription</key>
+    <string>MedMeter needs access to the camera to take photos.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>MedMeter needs access to microphone for taking videos.</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>MedMeter needs access to the photo gallery for picking photos and videos.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>MedMeter needs access to photos gallery for picking photos and videos.</string>
 </dict>
 </plist>

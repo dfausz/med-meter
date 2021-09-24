@@ -3,9 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MedMeter.Views.UpdateMedicinePage"
              Title="Update Medicine">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="ToolbarAddPhoto" Command="{Binding TakePhotoCommand}" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout Margin="24" Spacing="24">
+            <StackLayout Padding="12,16" Spacing="24" VerticalOptions="FillAndExpand">
                 <StackLayout>
                     <Label Text="Medicine Name:" FontSize="Medium"></Label>
                     <Entry Keyboard="Text" Text="{Binding Name}"></Entry>
@@ -14,6 +17,11 @@
                     <Label Text="Hours:" FontSize="Medium"></Label>
                     <Entry Keyboard="Numeric" Text="{Binding Hours}"></Entry>
                 </StackLayout>
+                <Image VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" MinimumHeightRequest="200" MinimumWidthRequest="200" Source="{Binding ImagePath}" Margin="0,20,0,0">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding TakePhotoCommand}" />
+                    </Image.GestureRecognizers>
+                </Image>
             </StackLayout>
             <StackLayout VerticalOptions="EndAndExpand" Padding="12,16">
                 <Button Text="Update" Command="{Binding UpdateMedicationCommand}"></Button>

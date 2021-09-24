@@ -3,10 +3,9 @@ using MedMeter.Services;
 using MedMeter.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
 using System.Threading.Tasks;
 
-namespace UnitTests
+namespace MedMeter.Test.Unit
 {
     [TestClass]
     public class UpdateMedicineViewModelTests
@@ -15,18 +14,45 @@ namespace UnitTests
 
         private Mock<IDataStore<Medicine>> DataStoreMock;
         private Mock<IDialogService> DialogServiceMock;
+        private Mock<IMedicineImageService> MedicineImageServiceMock;
 
         [TestInitialize]
         public void BeforeEachTest()
         {
             DataStoreMock = new Mock<IDataStore<Medicine>>();
             DialogServiceMock = new Mock<IDialogService>();
+            MedicineImageServiceMock = new Mock<IMedicineImageService>();
         }
 
         private void CreatePatient(Medicine medicine)
         {
             var medicineViewModel = new MedicineViewModel(DataStoreMock.Object, DialogServiceMock.Object, medicine);
-            Patient = new UpdateMedicineViewModel(DataStoreMock.Object, DialogServiceMock.Object, medicineViewModel);
+            Patient = new UpdateMedicineViewModel(DataStoreMock.Object, DialogServiceMock.Object, MedicineImageServiceMock.Object, medicineViewModel);
+        }
+
+        [TestMethod]
+        public async Task WillUpdateImageAfterTakingPhoto()
+        {
+            var expected = "FakeImage.gif";
+            MedicineImageServiceMock.Setup(image => image.TakePhotoAsync()).ReturnsAsync(expected);
+            CreatePatient(new Medicine("TestName", 4.0));
+
+            await Patient.TakePhotoAsync();
+            var triggerGetImagePath = Patient.ImagePath;
+
+            MedicineImageServiceMock.Verify(image => image.GetImage(expected));
+        }
+
+        [TestMethod]
+        public async Task WillSaveNewImagePathAfterTakingPhoto()
+        {
+            var expected = "FakeImage.gif";
+            MedicineImageServiceMock.Setup(image => image.TakePhotoAsync()).ReturnsAsync(expected);
+            CreatePatient(new Medicine("TestName", 4.0));
+
+            await Patient.TakePhotoAsync();
+
+            DataStoreMock.Verify(store => store.UpdateItemAsync(It.Is<Medicine>(med => med.Image == expected)));
         }
 
         [TestMethod]

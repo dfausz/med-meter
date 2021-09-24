@@ -3,6 +3,7 @@ using MedMeter.Services;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.CommunityToolkit.ObjectModel;
+using Xamarin.Forms;
 
 namespace MedMeter.ViewModels
 {
@@ -22,18 +23,29 @@ namespace MedMeter.ViewModels
             set => SetProperty(ref hours, value);
         }
 
+        public ImageSource ImagePath
+        {
+            get
+            {
+                return MedicineImageService.GetImage(Medicine.Image);
+            }
+        }
+
         public ICommand UpdateMedicationCommand { get; set; }
         public ICommand DeleteMedicationCommand { get; set; }
+        public ICommand TakePhotoCommand { get; set; }
 
         private Medicine Medicine;
 
         private IDataStore<Medicine> DataStore;
         private IDialogService DialogService;
+        private IMedicineImageService MedicineImageService;
 
-        public UpdateMedicineViewModel(IDataStore<Medicine> dataStore, IDialogService dialogService, MedicineViewModel medicineViewModel)
+        public UpdateMedicineViewModel(IDataStore<Medicine> dataStore, IDialogService dialogService, IMedicineImageService medicineImageService, MedicineViewModel medicineViewModel)
         {
             DataStore = dataStore;
             DialogService = dialogService;
+            MedicineImageService = medicineImageService;
 
             Medicine = medicineViewModel.GetMedicine();
 
@@ -42,6 +54,18 @@ namespace MedMeter.ViewModels
 
             UpdateMedicationCommand = new AsyncCommand(UpdateMedicineAsync);
             DeleteMedicationCommand = new AsyncCommand(DeleteMedicineAsync);
+            TakePhotoCommand = new AsyncCommand(TakePhotoAsync);
+        }
+
+        public async Task TakePhotoAsync()
+        {
+            var image = await MedicineImageService.TakePhotoAsync();
+            if (image != null)
+            {
+                Medicine.Image = image;
+                await DataStore.UpdateItemAsync(Medicine);
+                OnPropertyChanged(nameof(ImagePath));
+            }
         }
 
         public async Task UpdateMedicineAsync()
