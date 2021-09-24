@@ -79,6 +79,7 @@ namespace MedMeter.Test.Unit
         [TestMethod]
         public async Task DeleteMedicineWillDeleteItemInDataStore()
         {
+            DialogServiceMock.Setup(dialog => dialog.DisplayAlert(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(true);
             var expected = "TestID";
             CreatePatient(new Medicine() { Id = expected, Name = "TestName", Hours = 4.0 });
 
@@ -90,11 +91,23 @@ namespace MedMeter.Test.Unit
         [TestMethod]
         public async Task DeleteMedicineWillCloseDialog()
         {
+            DialogServiceMock.Setup(dialog => dialog.DisplayAlert(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(true);
             CreatePatient(new Medicine("TestName", 4.0));
 
             await Patient.DeleteMedicineAsync();
 
             DialogServiceMock.Verify(dialog => dialog.CloseDialogAsync());
+        }
+
+        [TestMethod]
+        public async Task WillNotDeleteMedicationWithoutConfirmation()
+        {
+            DialogServiceMock.Setup(dialog => dialog.DisplayAlert(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(false);
+            CreatePatient(new Medicine("TestName", 4.0));
+
+            await Patient.DeleteMedicineAsync();
+
+            DataStoreMock.Verify(store => store.DeleteItemAsync(It.IsAny<string>()), Times.Never);
         }
     }
 }

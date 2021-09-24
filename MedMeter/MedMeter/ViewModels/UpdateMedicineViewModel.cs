@@ -79,9 +79,13 @@ namespace MedMeter.ViewModels
 
         public async Task DeleteMedicineAsync()
         {
-            await DataStore.DeleteItemAsync(Medicine.Id);
+            var confirmation = await DialogService.DisplayAlert($"Remove {Medicine.Name}", $"Are you sure you want to remove {Medicine.Name} from your medications?", "Remove", "Cancel");
+            if (confirmation)
+            {
+                await DataStore.DeleteItemAsync(Medicine.Id);
 
-            await DialogService.CloseDialogAsync();
+                await DialogService.CloseDialogAsync();
+            }
         }
     }
 }
