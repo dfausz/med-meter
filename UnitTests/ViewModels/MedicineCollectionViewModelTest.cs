@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 
-namespace MedMeter.Test.Unit
+namespace MedMeter.Test.Unit.ViewModels
 {
     [TestClass]
     public class MedicineCollectionViewModelTest

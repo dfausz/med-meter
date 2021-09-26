@@ -7,7 +7,7 @@ using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace MedMeter.Test.Unit
+namespace MedMeter.Test.Unit.ViewModels
 {
     [TestClass]
     public class MedicineViewModelTests

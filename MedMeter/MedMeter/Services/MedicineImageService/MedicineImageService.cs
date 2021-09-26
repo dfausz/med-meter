@@ -34,11 +34,6 @@ namespace MedMeter.Services
             return ImageSource.FromFile(imagePath);
         }
 
-        public void StoreImage(string key)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<string> TakePhotoAsync()
         {
             try

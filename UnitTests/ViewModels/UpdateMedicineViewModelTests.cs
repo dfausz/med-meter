@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Threading.Tasks;
 
-namespace MedMeter.Test.Unit
+namespace MedMeter.Test.Unit.ViewModels
 {
     [TestClass]
     public class UpdateMedicineViewModelTests

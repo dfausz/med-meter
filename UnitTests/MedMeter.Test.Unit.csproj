@@ -118,11 +118,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddMedicineViewModelTests.cs" />
-    <Compile Include="MedicineCollectionViewModelTest.cs" />
+    <Compile Include="ViewModels\AddMedicineViewModelTests.cs" />
+    <Compile Include="ViewModels\MedicineCollectionViewModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MedicineViewModelTests.cs" />
-    <Compile Include="UpdateMedicineViewModelTests.cs" />
+    <Compile Include="ViewModels\MedicineViewModelTests.cs" />
+    <Compile Include="ViewModels\UpdateMedicineViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OpenTK.dll.config" />
