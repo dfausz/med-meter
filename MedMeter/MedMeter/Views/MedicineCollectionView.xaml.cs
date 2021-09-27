@@ -13,7 +13,8 @@ namespace MedMeter.Views
         {
             InitializeComponent();
 
-            ViewModel = new MedicineCollectionViewModel(new DataStore<Medicine>(), new DialogService());
+            var dialogService = new DialogService();
+            ViewModel = new MedicineCollectionViewModel(new DataStore<Medicine>(dialogService), dialogService);
             BindingContext = ViewModel;
         }
     }

@@ -6,7 +6,7 @@
              Title="MedMeter">
 
 
-    <views:MedicineCollection x:Name="MedicineList"></views:MedicineCollection>
+    <views:MedicineCollection x:Name="MedicineList" x:FieldModifier="public"></views:MedicineCollection>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="ToolbarPlus" Clicked="PlusToolbarItem_Clicked" />

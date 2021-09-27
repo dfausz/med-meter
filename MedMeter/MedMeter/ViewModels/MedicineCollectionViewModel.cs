@@ -47,12 +47,12 @@ namespace MedMeter.ViewModels
 
         public void UpdateMedicine(Medicine medicine)
         {
-            Medicines.Single(medVM => medVM.Id == medicine.Id).Update(medicine);
+            Medicines.SingleOrDefault(medVM => medVM.Id == medicine.Id)?.Update(medicine);
         }
 
         public void DeleteMedicine(string id)
         {
-            Medicines.Remove(Medicines.Single(medVM => medVM.Id == id));
+            Medicines.Remove(Medicines.SingleOrDefault(medVM => medVM.Id == id));
         }
     }
 }
